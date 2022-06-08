@@ -1,0 +1,8 @@
+name: DeathPacks
+author: SenseiJu
+website: https://senseiju.me
+
+version: ${version}
+api-version: 1.18
+
+main: me.senseiju.deathpacks.DeathPacks

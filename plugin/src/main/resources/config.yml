@@ -1,0 +1,5 @@
+storage: JSON
+sizeLimits:
+  default: 3
+  donator: 15
+  admin: -1
