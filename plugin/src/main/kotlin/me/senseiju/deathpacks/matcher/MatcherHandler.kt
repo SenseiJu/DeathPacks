@@ -17,7 +17,7 @@ class MatcherHandler(plugin: DeathPacks) {
     var matchableItems = arrayListOf<MatchableItem>()
         private set
 
-    private val file = File(plugin.dataFolder, "item.json")
+    private val file = File(plugin.dataFolder, "items.json")
 
     init {
         if (!file.exists()) {
