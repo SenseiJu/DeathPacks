@@ -22,8 +22,12 @@ class PlayerDeathListener(private val matcherHandler: MatcherHandler) : Listener
             return
         }
 
-        var itemsAdded = 0
         val deathPack = (api.getDeathPack(killer.uniqueId) ?: return) as DeathPackImpl
+        if (!deathPack.enabled) {
+            return
+        }
+
+        var itemsAdded = 0
         e.drops.removeAll { item ->
             if (matcherHandler.match(item) && deathPack.addItem(item)) {
                 itemsAdded += 1

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.senseiju.deathpacks"
-version = "1.0.0"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation(project(":api"))
-    implementation("com.github.SenseiJu:Sentils:3715b60a07")
+    implementation("com.github.SenseiJu:Sentils:be17902aca")
     implementation("dev.triumphteam:triumph-gui:3.1.2")
     implementation("me.mattstudios.utils:matt-framework:1.4.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")

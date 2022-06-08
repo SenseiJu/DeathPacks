@@ -6,6 +6,7 @@ import me.senseiju.deathpacks.PERMISSION_CONFIG
 import me.senseiju.deathpacks.PERMISSION_USE
 import me.senseiju.deathpacks.matcher.MatcherHandler
 import me.senseiju.deathpacks.storage.CachedStorage
+import me.senseiju.sentils.Set
 import me.senseiju.sentils.extensions.sendConfigMessage
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -18,6 +19,15 @@ class DeathPackCommand(private val storage: CachedStorage, private val matcherHa
     @Permission(PERMISSION_USE)
     fun default(sender: Player) {
         storage.getDeathPack(sender.uniqueId)?.openGui(sender)
+    }
+
+    @SubCommand("toggle")
+    @Permission(PERMISSION_USE)
+    fun toggle(sender: Player) {
+        val deathPack = storage.getDeathPack(sender.uniqueId) ?: return
+        deathPack.enabled = !deathPack.enabled
+
+        sender.sendConfigMessage("COMMAND_DEATHPACKS_TOGGLE", Set("{ENABLED}", deathPack.enabled.toColorText()))
     }
 
     @SubCommand("config")
@@ -39,5 +49,9 @@ class DeathPackCommand(private val storage: CachedStorage, private val matcherHa
         } else {
             sender.sendConfigMessage("COMMAND_DEATHPACKS_ADD_ITEM_ALREADY_ADDED")
         }
+    }
+
+    private fun Boolean.toColorText(): String {
+        return if (this) "&a&lEnabled" else "&c&lDisabled"
     }
 }

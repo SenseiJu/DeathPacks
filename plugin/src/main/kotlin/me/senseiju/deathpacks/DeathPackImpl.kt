@@ -20,12 +20,13 @@ private const val MAX_SIZE = 54
 @Serializable
 class DeathPackImpl(
     @Serializable(UUIDSerializer::class) val uuid: UUID,
-    private val items: ArrayList<@Serializable(ItemStackSerializer::class) ItemStack>
+    private val items: ArrayList<@Serializable(ItemStackSerializer::class) ItemStack>,
+    var enabled: Boolean
 ) : DeathPack {
 
     companion object {
         fun new(uuid: UUID): DeathPackImpl {
-            return DeathPackImpl(uuid, arrayListOf())
+            return DeathPackImpl(uuid, arrayListOf(), true)
         }
     }
 
