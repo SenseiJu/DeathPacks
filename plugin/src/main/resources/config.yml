@@ -1,1 +1,4 @@
 storage: JSON
+disabled-worlds:
+  - Example1
+  - Example2

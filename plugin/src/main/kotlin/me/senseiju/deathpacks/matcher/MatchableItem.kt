@@ -5,12 +5,10 @@ import dev.triumphteam.gui.guis.Gui
 import dev.triumphteam.gui.guis.GuiItem
 import kotlinx.serialization.Serializable
 import me.senseiju.deathpacks.DeathPacks
-import me.senseiju.deathpacks.extensions.ConfirmationGuiBuilder
-import me.senseiju.deathpacks.extensions.addLore
-import me.senseiju.deathpacks.extensions.openNextTick
-import me.senseiju.deathpacks.extensions.useItemMeta
+import me.senseiju.deathpacks.extensions.*
 import me.senseiju.deathpacks.serializers.ItemStackSerializer
 import me.senseiju.sentils.extensions.color
+import me.senseiju.sentils.extensions.primitives.color
 import me.senseiju.sentils.runnables.newRunnable
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -68,6 +66,12 @@ data class MatchableItem(
         val clonedItem = item.clone()
         clonedItem.useItemMeta {
             it.addLore(itemClickLore)
+            it.addLore(
+                Component.text(""),
+                Component.text("&bName: ${matchingOptions.name.toColorText()}".color()),
+                Component.text("&bEnchantments: ${matchingOptions.enchantments.toColorText()}".color()),
+                Component.text("&bLore: ${matchingOptions.lore.toColorText()}".color())
+            )
         }
 
         return ItemBuilder.from(clonedItem)
@@ -119,9 +123,25 @@ data class MatchableItem(
 
     private fun isEnchantmentsMatch(targetItem: ItemStack): Boolean {
         val targetItemEnchants = targetItem.itemMeta.enchants
-        return item.itemMeta.enchants.none {
-            targetItemEnchants[it.key] != it.value
+        val matchingItemEnchants = item.itemMeta.enchants
+
+        if (targetItemEnchants.size != matchingItemEnchants.size) {
+            return false
         }
+
+        val nonMatchingEnchants = matchingItemEnchants.filter {
+            if (!targetItemEnchants.containsKey(it.key)) {
+                return@filter true
+            }
+
+            if (targetItemEnchants[it.key] != it.value) {
+                return@filter true
+            }
+
+            return@filter false
+        }
+
+        return nonMatchingEnchants.isEmpty()
     }
 
     private fun isLoreMatch(targetItem: ItemStack): Boolean {

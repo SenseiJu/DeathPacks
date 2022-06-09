@@ -7,9 +7,7 @@ import me.senseiju.deathpacks.api.DeathPack
 import me.senseiju.deathpacks.extensions.openNextTick
 import me.senseiju.deathpacks.serializers.ItemStackSerializer
 import me.senseiju.sentils.extensions.entity.addItemOrDropNaturally
-import me.senseiju.sentils.serializers.UUIDSerializer
 import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -19,14 +17,13 @@ private const val MAX_SIZE = 54
 
 @Serializable
 class DeathPackImpl(
-    @Serializable(UUIDSerializer::class) val uuid: UUID,
     private val items: ArrayList<@Serializable(ItemStackSerializer::class) ItemStack>,
     var enabled: Boolean
 ) : DeathPack {
 
     companion object {
-        fun new(uuid: UUID): DeathPackImpl {
-            return DeathPackImpl(uuid, arrayListOf(), true)
+        fun new(): DeathPackImpl {
+            return DeathPackImpl(arrayListOf(), true)
         }
     }
 
@@ -50,9 +47,11 @@ class DeathPackImpl(
     }
 
     override fun isFull(): Boolean {
-        Bukkit.getPlayer(uuid) ?: return true
-
         return items.size >= MAX_SIZE
+    }
+
+    override fun hasItems(): Boolean {
+        return items.isNotEmpty()
     }
 
     override fun addItem(item: ItemStack): Boolean {

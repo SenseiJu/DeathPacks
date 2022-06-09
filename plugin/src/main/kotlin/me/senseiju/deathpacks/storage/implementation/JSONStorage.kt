@@ -19,7 +19,7 @@ class JSONStorage(private val plugin: DeathPacks) : CachedStorage(plugin) {
         val file = File(plugin.dataFolder, "data/$uuid.json")
         val deathPack = if (!file.exists()) {
             file.createNewFile()
-            DeathPackImpl.new(uuid)
+            DeathPackImpl.new()
         } else {
             json.decodeFromString(file.readText())
         }

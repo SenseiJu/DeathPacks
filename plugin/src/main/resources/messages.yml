@@ -1,8 +1,10 @@
-PREFIX: "&c&lDeathPacks &f»"
+PREFIX: "&c&lDeathPacks &8»"
 
-COMMAND_DEATHPACKS_ADD_NO_ITEM_IN_HAND: "&cYou must be holding an item to add it"
-COMMAND_DEATHPACKS_ADD_SUCCESS: "&aAdded item successfully"
-COMMAND_DEATHPACKS_ADD_ITEM_ALREADY_ADDED: "&cItem is already added"
-COMMAND_DEATHPACKS_TOGGLE: "&bToggled DeathPack to {ENABLED}"
+COMMAND_ADD_NO_ITEM_IN_HAND: "&eYou must be holding an item to add it"
+COMMAND_ADD_SUCCESS: "&eAdded item successfully"
+COMMAND_ADD_ITEM_ALREADY_ADDED: "&eItem is already added"
+COMMAND_TOGGLE: "&eToggled DeathPack to {ENABLED}"
+COMMAND_RELOAD_WARNING: "&eReloaded config and messages. It is recommended to restart the server instead"
 
-DEATHPACKS_ITEMS_ADDED: "&e{NUM_OF_ITEMS} &bitems added to your death pack (/deathpack)"
+ITEMS_ADDED: "&e{NUM_OF_ITEMS} &bitems added to your DeathPack &b(/deathpack)"
+ITEMS_TO_CLAIM: "&eYou have items in your DeathPack to claim &b(/deathpack)"

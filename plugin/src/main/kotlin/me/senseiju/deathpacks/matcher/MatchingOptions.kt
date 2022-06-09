@@ -4,6 +4,7 @@ import dev.triumphteam.gui.builder.item.ItemBuilder
 import dev.triumphteam.gui.guis.GuiItem
 import kotlinx.serialization.Serializable
 import me.senseiju.deathpacks.extensions.addLore
+import me.senseiju.deathpacks.extensions.toColorText
 import me.senseiju.deathpacks.extensions.useItemMeta
 import me.senseiju.sentils.extensions.color
 import me.senseiju.sentils.extensions.primitives.color
@@ -105,10 +106,6 @@ data class MatchingOptions(
         }
 
         return guiItem
-    }
-
-    private fun Boolean.toColorText(): String {
-        return if (this) "&a&lTrue" else "&c&lFalse"
     }
 
     private fun Boolean.toGlassPane(): Material {

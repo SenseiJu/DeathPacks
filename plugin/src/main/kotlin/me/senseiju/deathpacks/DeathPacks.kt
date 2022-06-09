@@ -24,8 +24,7 @@ class DeathPacks : JavaPlugin() {
     private lateinit var commandManager: CommandManager
 
     override fun onEnable() {
-        config = ConfigFile(this, "config.yml", true)
-        MessageProvider.messages = ConfigFile(this, "messages.yml", true)
+        reload()
 
         storage = JSONStorage(this)
         matcherHandler = MatcherHandler(this)
@@ -45,5 +44,10 @@ class DeathPacks : JavaPlugin() {
         storage.cancel()
 
         matcherHandler.save()
+    }
+
+    fun reload() {
+        config = ConfigFile(this, "config.yml", true)
+        MessageProvider.messages = ConfigFile(this, "messages.yml", true)
     }
 }

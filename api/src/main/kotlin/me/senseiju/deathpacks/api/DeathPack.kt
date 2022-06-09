@@ -6,6 +6,8 @@ interface DeathPack {
 
     fun isFull(): Boolean
 
+    fun hasItems(): Boolean
+
     /**
      * Adds item to the death pack
      *
