@@ -13,7 +13,6 @@ import me.senseiju.sentils.runnables.newRunnable
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.Damageable
 import org.bukkit.plugin.java.JavaPlugin
 
 private val confirmLore = listOf(
@@ -42,13 +41,6 @@ data class MatchableItem(
     @Serializable(ItemStackSerializer::class) val item: ItemStack,
     private val matchingOptions: MatchingOptions = MatchingOptions.default()
 ) {
-    init {
-        item.useItemMeta {
-            if (it is Damageable) {
-                it.damage = 0
-            }
-        }
-    }
 
     fun match(targetItem: ItemStack): Boolean {
         if (targetItem.type != item.type) {

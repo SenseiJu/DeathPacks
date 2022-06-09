@@ -7,10 +7,12 @@ import me.senseiju.deathpacks.DeathPacks
 import me.senseiju.deathpacks.extensions.addPaginationBar
 import me.senseiju.deathpacks.extensions.openNextTick
 import me.senseiju.deathpacks.extensions.serializeToString
+import me.senseiju.deathpacks.extensions.useItemMeta
 import me.senseiju.deathpacks.json
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.Damageable
 import java.io.File
 
 class MatcherHandler(plugin: DeathPacks) {
@@ -35,13 +37,20 @@ class MatcherHandler(plugin: DeathPacks) {
     }
 
     fun addItem(item: ItemStack): Boolean {
+        val toAdd = item.clone()
+        toAdd.useItemMeta {
+            if (it is Damageable) {
+                it.damage = 0
+            }
+        }
+
         matchableItems.forEach {
-            if (it.item.serializeToString() == item.serializeToString()) {
+            if (it.item.serializeToString() == toAdd.serializeToString()) {
                 return false
             }
         }
 
-        matchableItems.add(MatchableItem(item.clone()))
+        matchableItems.add(MatchableItem(toAdd))
         return true
     }
 

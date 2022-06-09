@@ -20,7 +20,8 @@ class DeathPacks : JavaPlugin() {
     lateinit var config: ConfigFile
     lateinit var storage: CachedStorage
 
-    private lateinit var matcherHandler: MatcherHandler
+    lateinit var matcherHandler: MatcherHandler
+        private set
     private lateinit var commandManager: CommandManager
 
     override fun onEnable() {
@@ -37,7 +38,7 @@ class DeathPacks : JavaPlugin() {
             PlayerDeathListener(matcherHandler)
         )
 
-        commandManager.register(DeathPackCommand(storage, matcherHandler))
+        DeathPackCommand(this, commandManager)
     }
 
     override fun onDisable() {

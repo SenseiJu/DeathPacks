@@ -6,5 +6,5 @@ COMMAND_ADD_ITEM_ALREADY_ADDED: "&eItem is already added"
 COMMAND_TOGGLE: "&eToggled DeathPack to {ENABLED}"
 COMMAND_RELOAD_WARNING: "&eReloaded config and messages. It is recommended to restart the server instead"
 
-ITEMS_ADDED: "&e{NUM_OF_ITEMS} &bitems added to your DeathPack &b(/deathpack)"
+ITEMS_ADDED: "&b{NUM_OF_ITEMS} &eitems added to your DeathPack &b(/deathpack)"
 ITEMS_TO_CLAIM: "&eYou have items in your DeathPack to claim &b(/deathpack)"

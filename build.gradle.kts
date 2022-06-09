@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "me.senseiju"
-version = "1.0.0"
 
 repositories {
     mavenCentral()
