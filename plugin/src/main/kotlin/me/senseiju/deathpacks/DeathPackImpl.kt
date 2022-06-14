@@ -12,7 +12,6 @@ import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.*
 
 private const val MAX_SIZE = 54
 
@@ -25,6 +24,12 @@ class DeathPackImpl(
     companion object {
         fun new(): DeathPackImpl {
             return DeathPackImpl(arrayListOf(), true)
+        }
+    }
+
+    fun getItems(): List<ItemStack> {
+        return items.map {
+            it.clone()
         }
     }
 

@@ -1,5 +1,7 @@
 package me.senseiju.deathpacks.storage.implementation
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import me.senseiju.deathpacks.DeathPackImpl
@@ -15,10 +17,12 @@ class JSONStorage(private val plugin: DeathPacks) : CachedStorage(plugin) {
         File(plugin.dataFolder, "data").mkdirs()
     }
 
-    override fun loadDeathPack(uuid: UUID): DeathPackImpl {
+    override suspend fun loadDeathPack(uuid: UUID): DeathPackImpl {
         val file = File(plugin.dataFolder, "data/$uuid.json")
         val deathPack = if (!file.exists()) {
-            file.createNewFile()
+            withContext(Dispatchers.IO) {
+                file.createNewFile()
+            }
             DeathPackImpl.new()
         } else {
             json.decodeFromString(file.readText())
@@ -27,12 +31,14 @@ class JSONStorage(private val plugin: DeathPacks) : CachedStorage(plugin) {
         return deathPack
     }
 
-    override fun saveDeathPack(uuid: UUID) {
+    override suspend fun saveDeathPack(uuid: UUID) {
         val deathPack = players[uuid] ?: return
 
         val file = File(plugin.dataFolder, "data/$uuid.json")
         if (!file.exists()) {
-            file.createNewFile()
+            withContext(Dispatchers.IO) {
+                file.createNewFile()
+            }
         }
 
         file.writeText(json.encodeToString(deathPack))

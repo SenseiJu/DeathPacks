@@ -1,5 +1,6 @@
 package me.senseiju.deathpacks.listeners
 
+import kotlinx.coroutines.*
 import me.senseiju.deathpacks.storage.CachedStorage
 import me.senseiju.sentils.extensions.primitives.color
 import me.senseiju.sentils.extensions.sendConfigMessage
@@ -15,7 +16,9 @@ class PlayerLoginListener(private val storage: CachedStorage) : Listener {
 
     @EventHandler
     private fun onPlayerPreLogin(e: AsyncPlayerPreLoginEvent) {
-        storage.players[e.uniqueId] = storage.getDeathPack(e.uniqueId) ?: storage.loadDeathPack(e.uniqueId)
+        runBlocking(Dispatchers.IO) {
+            storage.players[e.uniqueId] = storage.getDeathPack(e.uniqueId) ?: storage.loadDeathPack(e.uniqueId)
+        }
     }
 
     @EventHandler

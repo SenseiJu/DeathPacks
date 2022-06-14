@@ -1,5 +1,6 @@
 package me.senseiju.deathpacks
 
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import me.mattstudios.mf.base.CommandManager
 import me.senseiju.deathpacks.api.DeathPacksProvider
@@ -9,6 +10,7 @@ import me.senseiju.deathpacks.listeners.PlayerLoginListener
 import me.senseiju.deathpacks.matcher.MatcherHandler
 import me.senseiju.deathpacks.storage.CachedStorage
 import me.senseiju.deathpacks.storage.implementation.JSONStorage
+import me.senseiju.deathpacks.storage.implementation.MySQLStorage
 import me.senseiju.sentils.extensions.MessageProvider
 import me.senseiju.sentils.registerEvents
 import me.senseiju.sentils.storage.ConfigFile
@@ -18,6 +20,7 @@ val json = Json { prettyPrint = true }
 
 class DeathPacks : JavaPlugin() {
     lateinit var config: ConfigFile
+    lateinit var databaseConfig: ConfigFile
     lateinit var storage: CachedStorage
 
     lateinit var matcherHandler: MatcherHandler
@@ -27,7 +30,8 @@ class DeathPacks : JavaPlugin() {
     override fun onEnable() {
         reload()
 
-        storage = JSONStorage(this)
+        selectStorage()
+
         matcherHandler = MatcherHandler(this)
         commandManager = CommandManager(this)
 
@@ -49,13 +53,28 @@ class DeathPacks : JavaPlugin() {
         matcherHandler.save()
     }
 
+    private fun selectStorage() {
+        databaseConfig = ConfigFile(this, "database.yml", true)
+
+        storage = when (config.getString("storage", "JSON")) {
+            "MYSQL" -> MySQLStorage(this)
+            "JSON" -> JSONStorage(this)
+            else -> throw IllegalArgumentException("Illegal storage type specified in 'config.yml'")
+        }
+    }
+
     /*
     Loads DeathPack data for all currently online players if the server was reloaded. Live reloading is not recommended
     however this should remove some issues.
+
+    This method is blocking and will wait until all player data is reloaded before continuing. This can take extended
+    times if many players are online.
      */
     private fun loadOnlinePlayers() {
-        server.onlinePlayers.forEach {
-            storage.players[it.uniqueId] = storage.loadDeathPack(it.uniqueId)
+        runBlocking {
+            server.onlinePlayers.forEach {
+                storage.players[it.uniqueId] = storage.loadDeathPack(it.uniqueId)
+            }
         }
     }
 

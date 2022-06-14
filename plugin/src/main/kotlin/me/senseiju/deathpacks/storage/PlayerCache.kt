@@ -1,5 +1,6 @@
 package me.senseiju.deathpacks.storage
 
+import kotlinx.coroutines.runBlocking
 import me.senseiju.deathpacks.DeathPackImpl
 import me.senseiju.deathpacks.DeathPacks
 import org.bukkit.Bukkit
@@ -28,8 +29,10 @@ open class PlayerCache(private val plugin: DeathPacks) : BukkitRunnable() {
     }
 
     private fun save() {
-        players.keys.forEach { uuid ->
-            plugin.storage.saveDeathPack(uuid)
+        runBlocking {
+            players.keys.forEach { uuid ->
+                plugin.storage.saveDeathPack(uuid)
+            }
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.*
 
 interface Storage {
 
-    fun loadDeathPack(uuid: UUID): DeathPackImpl
+    suspend fun loadDeathPack(uuid: UUID): DeathPackImpl
 
-    fun saveDeathPack(uuid: UUID)
+    suspend fun saveDeathPack(uuid: UUID)
 }
