@@ -1,19 +1,18 @@
 package me.senseiju.deathpacks.extensions
 
-import net.kyori.adventure.text.Component
 import org.bukkit.inventory.meta.ItemMeta
 
-fun ItemMeta.addLore(components: List<Component>) {
+fun ItemMeta.addLore(strings: List<String>) {
     if (!hasLore()) {
-        lore(components)
+        lore = strings
     } else {
-        lore()!!.let { lore ->
-            lore.addAll(components)
-            lore(lore)
+        lore!!.let { newLore ->
+            newLore.addAll(strings)
+            lore = newLore
         }
     }
 }
 
-fun ItemMeta.addLore(vararg components: Component) {
-    addLore(components.toList())
+fun ItemMeta.addLore(vararg string: String) {
+    addLore(string.toList())
 }

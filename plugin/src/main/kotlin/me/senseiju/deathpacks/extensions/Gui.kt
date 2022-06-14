@@ -21,9 +21,7 @@ val BLACK_FILLER_PANE = ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE)
 
 class ConfirmationGuiBuilder(title: Component) {
 
-    constructor(title: String) : this(Component.text(title.color())) {
-
-    }
+    constructor(title: String) : this(Component.text(title.color()))
 
     private val gui = Gui.gui()
         .rows(3)
@@ -55,13 +53,13 @@ class ConfirmationGuiBuilder(title: Component) {
         return this
     }
 
-    fun setConfirmLore(vararg lore: Component): ConfirmationGuiBuilder {
+    fun setConfirmLore(vararg lore: String): ConfirmationGuiBuilder {
         return setConfirmLore(lore.toList())
     }
 
-    fun setConfirmLore(lore: List<Component>): ConfirmationGuiBuilder {
+    fun setConfirmLore(lore: List<String>): ConfirmationGuiBuilder {
         confirmItem.itemStack.useItemMeta { meta ->
-            meta.lore(lore)
+            meta.lore = lore
         }
 
         return this
@@ -73,13 +71,13 @@ class ConfirmationGuiBuilder(title: Component) {
         return this
     }
 
-    fun setDeclineLore(vararg lore: Component): ConfirmationGuiBuilder {
+    fun setDeclineLore(vararg lore: String): ConfirmationGuiBuilder {
         return setDeclineLore(lore.toList())
     }
 
-    fun setDeclineLore(lore: List<Component>): ConfirmationGuiBuilder {
+    fun setDeclineLore(lore: List<String>): ConfirmationGuiBuilder {
         declineItem.itemStack.useItemMeta { meta ->
-            meta.lore(lore)
+            meta.lore = lore
         }
 
         return this

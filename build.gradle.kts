@@ -15,11 +15,13 @@ subprojects {
 
     repositories {
         maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-        compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+        //compileOnly("io.papermc.paper:paper-api:1.19.0-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     }
 }

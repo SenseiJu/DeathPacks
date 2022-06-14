@@ -22,19 +22,16 @@ private val confirmLore = listOf(
     "",
     "&c&lWARNING &7This action is irreversible")
     .color()
-    .map { Component.text(it) }
 
 private val declineLore = listOf("",
     "&7This will keep the item in the matcher and continue",
     "&7matching the item when the player dies")
     .color()
-    .map { Component.text(it) }
 
 private val itemClickLore = listOf("",
     "&fLeft-Click &7to edit matching options",
     "&fRight-Click &7to remove item")
     .color()
-    .map { Component.text(it) }
 
 @Serializable
 data class MatchableItem(
@@ -59,10 +56,10 @@ data class MatchableItem(
         clonedItem.useItemMeta {
             it.addLore(itemClickLore)
             it.addLore(
-                Component.text(""),
-                Component.text("&bName: ${matchingOptions.name.toColorText()}".color()),
-                Component.text("&bEnchantments: ${matchingOptions.enchantments.toColorText()}".color()),
-                Component.text("&bLore: ${matchingOptions.lore.toColorText()}".color())
+                "",
+                "&bName: ${matchingOptions.name.toColorText()}".color(),
+                "&bEnchantments: ${matchingOptions.enchantments.toColorText()}".color(),
+                "&bLore: ${matchingOptions.lore.toColorText()}".color()
             )
         }
 
@@ -104,18 +101,21 @@ data class MatchableItem(
     }
 
     private fun isNameMatch(targetItem: ItemStack): Boolean {
-        if (!item.itemMeta.hasDisplayName() && !targetItem.itemMeta.hasDisplayName()) {
+        val targetItemMeta = targetItem.itemMeta!!
+        val matchingItemMeta = item.itemMeta!!
+
+        if (!matchingItemMeta.hasDisplayName() && !targetItemMeta.hasDisplayName()) {
             return true
-        } else if (item.itemMeta.hasDisplayName() && targetItem.itemMeta.hasDisplayName()) {
-            return item.itemMeta.displayName() == targetItem.itemMeta.displayName()
+        } else if (matchingItemMeta.hasDisplayName() && targetItemMeta.hasDisplayName()) {
+            return matchingItemMeta.displayName == targetItemMeta.displayName
         }
 
         return false
     }
 
     private fun isEnchantmentsMatch(targetItem: ItemStack): Boolean {
-        val targetItemEnchants = targetItem.itemMeta.enchants
-        val matchingItemEnchants = item.itemMeta.enchants
+        val targetItemEnchants = targetItem.itemMeta!!.enchants
+        val matchingItemEnchants = item.itemMeta!!.enchants
 
         if (targetItemEnchants.size != matchingItemEnchants.size) {
             return false
@@ -137,11 +137,14 @@ data class MatchableItem(
     }
 
     private fun isLoreMatch(targetItem: ItemStack): Boolean {
-        if (!item.itemMeta.hasLore() && !targetItem.itemMeta.hasLore()) {
+        val targetItemMeta = targetItem.itemMeta!!
+        val matchingItemMeta = item.itemMeta!!
+
+        if (!matchingItemMeta.hasLore() && !targetItemMeta.hasLore()) {
             return true
-        } else if (item.itemMeta.hasLore() && targetItem.itemMeta.hasLore()) {
-            val itemLore = item.itemMeta.lore()!!
-            val targetItemLore = targetItem.itemMeta.lore()!!
+        } else if (matchingItemMeta.hasLore() && targetItemMeta.hasLore()) {
+            val itemLore = matchingItemMeta.lore!!
+            val targetItemLore = targetItemMeta.lore!!
             if (itemLore.size != targetItemLore.size) {
                 return false
             }

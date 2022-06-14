@@ -1,17 +1,15 @@
 package me.senseiju.deathpacks.listeners
 
 import me.senseiju.deathpacks.storage.CachedStorage
+import me.senseiju.sentils.extensions.primitives.color
 import me.senseiju.sentils.extensions.sendConfigMessage
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerLoginEvent
 
-private val COMPONENT_FAILED_TO_LOAD = Component.text("DeathPack failed to load")
-    .color(NamedTextColor.RED)
+private val COMPONENT_FAILED_TO_LOAD = "&cDeathPack failed to load".color()
 
 class PlayerLoginListener(private val storage: CachedStorage) : Listener {
 

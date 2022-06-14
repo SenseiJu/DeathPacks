@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.senseiju.deathpacks"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ dependencies {
     implementation("com.github.SenseiJu:Sentils:be17902aca")
     implementation("dev.triumphteam:triumph-gui:3.1.2")
     implementation("me.mattstudios.utils:matt-framework:1.4.6")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 }
 
 dependencies {
@@ -44,7 +44,7 @@ tasks {
 
     register("copyJarToServer", Copy::class) {
         from(shadowJar)
-        into("D:\\Servers\\Minecraft\\DeathPacks\\plugins\\update")
+        into("D:\\Servers\\Minecraft\\1.19 Sandbox\\plugins\\update")
     }
 }
 

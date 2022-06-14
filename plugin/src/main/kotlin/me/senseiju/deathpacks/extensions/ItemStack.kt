@@ -26,7 +26,7 @@ fun String.deserializeToItemStack(): ItemStack {
 }
 
 fun ItemStack.useItemMeta(update: (ItemMeta) -> Unit) {
-    val meta = itemMeta
+    val meta = itemMeta!!
     update(meta)
     itemMeta = meta
 }

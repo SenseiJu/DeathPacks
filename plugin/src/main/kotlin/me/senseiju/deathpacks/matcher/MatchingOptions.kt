@@ -8,7 +8,6 @@ import me.senseiju.deathpacks.extensions.toColorText
 import me.senseiju.deathpacks.extensions.useItemMeta
 import me.senseiju.sentils.extensions.color
 import me.senseiju.sentils.extensions.primitives.color
-import net.kyori.adventure.text.Component
 import org.bukkit.Material
 
 private val nameOptionLore = listOf(
@@ -16,7 +15,6 @@ private val nameOptionLore = listOf(
     "&7This option will determine if the name will be matched.",
     "&7The names of the item must be an exact match.")
     .color()
-    .map { Component.text(it) }
 
 
 private val enchantmentsOptionLore = listOf(
@@ -25,7 +23,6 @@ private val enchantmentsOptionLore = listOf(
     "&7The order of enchantments do not matters however the level of the,",
     "&7enchant does.")
     .color()
-    .map { Component.text(it) }
 
 private val loreOptionLore = listOf(
     "",
@@ -33,7 +30,6 @@ private val loreOptionLore = listOf(
     "&7The order of lore matters and if its not an exact match,",
     "&7the item will not be matched.")
     .color()
-    .map { Component.text(it) }
 
 @Serializable
 data class MatchingOptions(
@@ -58,12 +54,12 @@ data class MatchingOptions(
 
                 event.currentItem?.type = name.toGlassPane()
                 event.currentItem?.useItemMeta {
-                    it.displayName(Component.text("&bName&f: ${name.toColorText()}".color()))
+                    it.setDisplayName("&bName&f: ${name.toColorText()}".color())
                 }
             }
 
         guiItem.itemStack.useItemMeta {
-            it.displayName(Component.text("&bName&f: ${name.toColorText()}".color()))
+            it.setDisplayName("&bName&f: ${name.toColorText()}".color())
             it.addLore(nameOptionLore)
         }
 
@@ -77,12 +73,12 @@ data class MatchingOptions(
 
                 event.currentItem?.type = enchantments.toGlassPane()
                 event.currentItem?.useItemMeta {
-                    it.displayName(Component.text("&bEnchantments&f: ${enchantments.toColorText()}".color()))
+                    it.setDisplayName("&bEnchantments&f: ${enchantments.toColorText()}".color())
                 }
             }
 
         guiItem.itemStack.useItemMeta {
-            it.displayName(Component.text("&bEnchantments&f: ${enchantments.toColorText()}".color()))
+            it.setDisplayName("&bEnchantments&f: ${enchantments.toColorText()}".color())
             it.addLore(enchantmentsOptionLore)
         }
 
@@ -96,12 +92,12 @@ data class MatchingOptions(
 
                 event.currentItem?.type = lore.toGlassPane()
                 event.currentItem?.useItemMeta {
-                    it.displayName(Component.text("&bLore&f: ${lore.toColorText()}".color()))
+                    it.setDisplayName("&bLore&f: ${lore.toColorText()}".color())
                 }
             }
 
         guiItem.itemStack.useItemMeta {
-            it.displayName(Component.text("&bLore&f: ${lore.toColorText()}".color()))
+            it.setDisplayName("&bLore&f: ${lore.toColorText()}".color())
             it.addLore(loreOptionLore)
         }
 

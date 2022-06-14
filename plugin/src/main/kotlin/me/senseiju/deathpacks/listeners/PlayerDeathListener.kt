@@ -20,16 +20,18 @@ class PlayerDeathListener(private val matcherHandler: MatcherHandler) : Listener
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private fun onPlayerDeath(e: PlayerDeathEvent) {
-        if (isWorldsDisabled(e)) {
-            return
-        }
-
-        e.drops.addAll(api.getDeathPack(e.entity.uniqueId)?.clearItems() ?: emptyList())
-
+        val player = e.entity
         val killer = e.entity.killer ?: return
         if (!killer.isOnline || !killer.hasPermission(PERMISSION_USE)) {
             return
         }
+
+        val disabledWorlds = plugin.config.getStringList("disabled-worlds")
+        if (disabledWorlds.contains(player.location.world?.name) || disabledWorlds.contains(killer.location.world?.name)) {
+            return
+        }
+
+        e.drops.addAll(api.getDeathPack(player.uniqueId)?.clearItems() ?: emptyList())
 
         val deathPack = (api.getDeathPack(killer.uniqueId) ?: return) as DeathPackImpl
         if (!deathPack.enabled) {
@@ -49,14 +51,5 @@ class PlayerDeathListener(private val matcherHandler: MatcherHandler) : Listener
         if (itemsAdded > 0) {
             killer.sendConfigMessage("ITEMS_ADDED", Set("{NUM_OF_ITEMS}", itemsAdded))
         }
-    }
-
-    private fun isWorldsDisabled(e: PlayerDeathEvent): Boolean {
-        val disabledWorlds = plugin.config.getStringList("disabled-worlds")
-        if (disabledWorlds.contains(e.entity.location.world.name) || disabledWorlds.contains(e.player.location.world.name)) {
-            return true
-        }
-
-        return false
     }
 }
