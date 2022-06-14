@@ -39,12 +39,24 @@ class DeathPacks : JavaPlugin() {
         )
 
         DeathPackCommand(this, commandManager)
+
+        loadOnlinePlayers()
     }
 
     override fun onDisable() {
         storage.cancel()
 
         matcherHandler.save()
+    }
+
+    /*
+    Loads DeathPack data for all currently online players if the server was reloaded. Live reloading is not recommended
+    however this should remove some issues.
+     */
+    private fun loadOnlinePlayers() {
+        server.onlinePlayers.forEach {
+            storage.players[it.uniqueId] = storage.loadDeathPack(it.uniqueId)
+        }
     }
 
     fun reload() {
